@@ -2,7 +2,7 @@
 '''
 Base model for HBNB project
 '''
-from .__init__ import storage
+from models import storage
 from dateutil import parser
 from datetime import datetime
 import json

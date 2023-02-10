@@ -110,18 +110,17 @@ class HBNBCommand(cmd.Cmd):
         try:
             with open("file.json", "r") as f:
                 models_dict = json.load(f)
-                print("[", end="")
                 if models_dict:
+                    objects_list = []
                     for item in models_dict:
                         if line and line in HBNBCommand.classes_list:
                             obj3 = HBNBCommand.classes[line](**(models_dict[item]))
-                            print(f"\"{obj3}\"", end="")
+                            objects_list.append(str(obj3))
                         elif len(line) == 0:
                             for classes in HBNBCommand.classes_list:
                                 obj4 = HBNBCommand.classes[classes](**(models_dict[item]))
-                            print(f"\"{obj4}\"", end="")
-
-                print("]")
+                                objects_list.append(str(obj4))
+            print(objects_list)
         except FileNotFoundError as e:
             print("** no instances saved **")
             print(e)

@@ -4,6 +4,12 @@ Console program
 '''
 import cmd
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from models import storage
 
 
@@ -12,8 +18,8 @@ class HBNBCommand(cmd.Cmd):
     Cmd application
     '''
     prompt = "(hbnb) "
-    classes = {"BaseModel": BaseModel}
-    class_list = ["BaseModel"]
+    classes = {"BaseModel": BaseModel, "User": User, "State": State, "City": City, "Amenity": Amenity, "Place":Place, "Review": Review}
+    class_list = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
 
     def do_quit(self, line):
         '''Quit command to exit the program
@@ -28,10 +34,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
-        '''
-        Prevent execution of last command after new line
-
-        '''
+        '''Prevent execution of last command after new line'''
         pass
 
     def validate(string):
@@ -52,7 +55,7 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, line):
         '''create a new instance of BaseModel'''
         check = HBNBCommand.validate(line)
-        if check == True:
+        if check is True:
             obj = HBNBCommand.classes[line]()
             obj.save()
             print(obj.id)
@@ -126,6 +129,35 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def complete_create(self, text, line, begidx, endidx):
+        '''complete input for the create method'''
+        if text:
+            return [cls for cls in self.class_list if cls.startswith(text)]
+        else:
+            return self.class_list
+
+    def complete_show(self, text, line, begidx, endidx):
+        '''complete input for the show method'''
+        if text:
+            return [cls for cls in self.class_list if cls.startswith(text)]
+        else:
+            return self.class_list
+
+    def complete_destroy(self, text, line, begidx, endidx):
+        '''complete input for the destroy method'''
+        if text:
+            return [cls for cls in self.class_list if cls.startswith(text)]
+        else:
+            return self.class_list
+
+    def complete_all(self, text, line, begidx, endidx):
+        '''complete input for the all method'''
+        if text:
+            return [cls for cls in self.class_list if cls.startswith(text)]
+        else:
+            return self.class_list
+
+    def complete_update(self, text, line, begidx, endidx):
+        '''complete input for the update method'''
         if text:
             return [cls for cls in self.class_list if cls.startswith(text)]
         else:

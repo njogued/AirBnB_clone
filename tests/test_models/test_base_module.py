@@ -9,7 +9,7 @@ import unittest
 import datetime
 import os
 import sys
-sys.path.append("/AirBnB_clone/")
+sys.path.append("/alx-higher_level_programming/BnB")
 from models import storage
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage

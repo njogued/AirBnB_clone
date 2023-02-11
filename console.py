@@ -3,8 +3,8 @@
 Console program
 '''
 import cmd
-import json
 from models.base_model import BaseModel
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -13,7 +13,7 @@ class HBNBCommand(cmd.Cmd):
     '''
     prompt = "(hbnb) "
     classes = {"BaseModel": BaseModel}
-    classes_list = ["BaseModel"]
+    class_list = ["BaseModel"]
 
     def do_quit(self, line):
         '''Quit command to exit the program
@@ -39,10 +39,10 @@ class HBNBCommand(cmd.Cmd):
         if len(string) == 0:
             print("** class name missing **")
             return False
-        elif len(string) > 0 and string not in HBNBCommand.classes_list:
+        elif len(string) > 0 and string not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return False
-        elif string in HBNBCommand.classes_list:
+        elif string in HBNBCommand.classes:
             return True
 
     def validate_strlist(string):
@@ -59,71 +59,77 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         '''show print a base models string rep'''
-        line_list = []
         line_list = line.split(" ")
         if len(line) == 0:
             print("** class name missing **")
-        elif line_list[0] not in HBNBCommand.classes_list:
+        elif line_list[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
-        elif len(line_list) == 1 and line_list[0] in HBNBCommand.classes_list:
+        elif len(line_list) == 1 and line_list[0] in HBNBCommand.classes:
             print("** instance id missing **")
         else:
             full_address = f"{line_list[0]}.{line_list[1]}"
-            try:
-                with open("file.json", "r") as f:
-                    models_dict = json.load(f)
-                    if full_address in models_dict:
-                        obj2 = HBNBCommand.classes[line_list[0]](**(models_dict[full_address]))
-                        print(obj2)
-                    else:
-                        print("** no instance found **")
-            except FileNotFoundError as e:
-                print("** no instances saved **")
-                print(e)
+            models = storage.all()
+            if full_address in models:
+                print(models[full_address])
+            else:
+                print("** no instance found **")
 
     def do_destroy(self, line):
         '''Destroy an instance'''
         line_list = line.split(" ")
         if len(line) == 0:
             print("** class name missing **")
-        elif line_list[0] not in HBNBCommand.classes_list:
+        elif line_list[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
-        elif len(line_list) == 1 and line_list[0] in HBNBCommand.classes_list:
+        elif len(line_list) == 1 and line_list[0] in HBNBCommand.classes:
             print("** instance id missing **")
         else:
             full_address = f"{line_list[0]}.{line_list[1]}"
-            try:
-                with open("file.json", "r") as f:
-                    models_dict = json.load(f)
-                    if full_address in models_dict:
-                        del models_dict[full_address]
-                        with open("file.json", "w") as f:
-                            json.dump(models_dict, f, indent=2)
-                    else:
-                        print("** no instance found **")
-            except FileNotFoundError as e:
-                print("** no instances saved **")
-                print(e)
+            models = storage.all()
+            if full_address in models:
+                del models[full_address]
+                storage.save()
+            else:
+                print("** no instance found **")
 
     def do_all(self, line):
         '''Print all instances based on the class'''
-        try:
-            with open("file.json", "r") as f:
-                models_dict = json.load(f)
-                if models_dict:
-                    objects_list = []
-                    for item in models_dict:
-                        if line and line in HBNBCommand.classes_list:
-                            obj3 = HBNBCommand.classes[line](**(models_dict[item]))
-                            objects_list.append(str(obj3))
-                        elif len(line) == 0:
-                            for classes in HBNBCommand.classes_list:
-                                obj4 = HBNBCommand.classes[classes](**(models_dict[item]))
-                                objects_list.append(str(obj4))
-            print(objects_list)
-        except FileNotFoundError as e:
-            print("** no instances saved **")
-            print(e)
+        if not line or line and line in HBNBCommand.classes:
+            models = storage.all()
+            obj_list = []
+            for obj in models.values():
+                obj_list.append(str(obj))
+            print(obj_list)
+
+    def do_update(self, line):
+        '''Updates the class with the attributes in line'''
+        line_list = line.split()
+        if len(line) == 0:
+            print("** class name missing **")
+        elif line_list[0] not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+        elif len(line_list) == 1 and line_list[0] in HBNBCommand.classes:
+            print("** instance id missing **")
+        elif len(line_list) == 2:
+            print("** attribute name missing **")
+        elif len(line_list) == 3:
+            print("** value missing **")
+        else:
+            key = f"{line_list[0]}.{line_list[1]}"
+            my_dict = storage.all()
+            if key in my_dict:
+                val = line_list[3]
+                print(type(val))
+                setattr(my_dict[key], line_list[2], val)
+                storage.save()
+            else:
+                print("** no instance found **")
+
+    def complete_create(self, text, line, begidx, endidx):
+        if text:
+            return [cls for cls in self.class_list if cls.startswith(text)]
+        else:
+            return self.class_list
 
 
 if __name__ == "__main__":

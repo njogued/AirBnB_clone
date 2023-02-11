@@ -1,14 +1,20 @@
 #!/usr/bin/python3
-'''test the classes'''
+'''
+Test the Base Class
+Cool fact: Use g; to go to last edited line before save
+
+Issue: Remove the path in os.remove() in test_first_file_storage
+'''
 import unittest
 import datetime
+import os
 import sys
-
-
 sys.path.append("/alx-higher_level_programming/BnB")
-
-
+from models import storage
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
+
+
 class TestBase(unittest.TestCase):
     '''Test the base class methods and attributes'''
     @classmethod
@@ -23,6 +29,8 @@ class TestBase(unittest.TestCase):
         self.assertTrue(hasattr(TestBase.obj, "id"))
         self.assertEqual(str, type(TestBase.obj.id))
         self.assertNotEqual(TestBase.obj.id, TestBase.obj2.id)
+        obj3 = BaseModel(**(TestBase.obj.to_dict()))
+        self.assertEqual(obj3.id, TestBase.obj.id)
 
     def test_datetime(self):
         '''Test the datetime initilization and update'''
@@ -48,11 +56,18 @@ class TestBase(unittest.TestCase):
         updateiso = TestBase.obj.updated_at.isoformat()
         self.assertEqual(updateiso, dct["updated_at"])
 
+    def test_first_file_storage(self):
+        '''Test the serialization and deserialization of BaseModel'''
+        '''os.remove("/alx-higher_level_programming/BnB/file.json")'''
+        objects = storage.all()
+        self.assertIsInstance(objects, dict)
+
     @classmethod
     def tearDownClass(cls):
         '''tearDownClass method to destroy object after all tests run'''
         del cls.obj
         del cls.obj2
+
 
 if __name__ == "__main__":
     unittest.main()

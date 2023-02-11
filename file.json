@@ -1,52 +1,9 @@
 {
-  "BaseModel.0b333728-1603-4867-911d-e2193ad6b204": {
+  "BaseModel.e649557f-7865-4458-a354-4e81a4e5d090": {
     "__class__": "BaseModel",
-    "created_at": "2023-02-08T11:06:04.850506",
-    "id": "0b333728-1603-4867-911d-e2193ad6b204",
-    "updated_at": "2023-02-08T11:06:04.850513"
-  },
-  "BaseModel.11722be4-0680-463d-95fd-d1c3005046e6": {
-    "__class__": "BaseModel",
-    "created_at": "2023-02-08T22:45:21.349337",
-    "id": "11722be4-0680-463d-95fd-d1c3005046e6",
-    "updated_at": "2023-02-08T22:45:21.349338"
-  },
-  "BaseModel.24747864-ad23-4386-a1d4-0af8b5f7a2d9": {
-    "__class__": "BaseModel",
-    "created_at": "2023-02-08T22:45:21.349281",
-    "id": "24747864-ad23-4386-a1d4-0af8b5f7a2d9",
-    "updated_at": "2023-02-08T22:45:21.349289"
-  },
-  "BaseModel.8b5f1d6f-5633-4f69-b8b6-e81c169d4213": {
-    "__class__": "BaseModel",
-    "created_at": "2023-02-10T05:28:24.847553",
-    "id": "8b5f1d6f-5633-4f69-b8b6-e81c169d4213",
-    "my_number": 89,
-    "name": "My_First_Model",
-    "updated_at": "2023-02-10T05:28:24.847561"
-  },
-  "BaseModel.d4c20ec1-a9c9-4177-8d45-8f8ce4af8c87": {
-    "__class__": "BaseModel",
-    "created_at": "2023-02-08T11:06:00.248739",
-    "id": "d4c20ec1-a9c9-4177-8d45-8f8ce4af8c87",
-    "updated_at": "2023-02-08T11:06:00.248748"
-  },
-  "BaseModel.d9145274-914b-476a-b1c9-93a73e5dfde0": {
-    "__class__": "BaseModel",
-    "created_at": "2023-02-08T12:37:03.954824",
-    "id": "d9145274-914b-476a-b1c9-93a73e5dfde0",
-    "updated_at": "2023-02-08T12:37:03.954830"
-  },
-  "BaseModel.e12b8a92-5e2a-4e1d-a15c-e879bc71aed8": {
-    "__class__": "BaseModel",
-    "created_at": "2023-02-08T10:54:25.445377",
-    "id": "e12b8a92-5e2a-4e1d-a15c-e879bc71aed8",
-    "updated_at": "2023-02-08T10:54:25.445384"
-  },
-  "BaseModel.f676fd0a-1bd7-4204-ac07-28f39b05ded2": {
-    "__class__": "BaseModel",
-    "created_at": "2023-02-08T11:06:14.745505",
-    "id": "f676fd0a-1bd7-4204-ac07-28f39b05ded2",
-    "updated_at": "2023-02-08T11:06:14.745515"
+    "created_at": "2023-02-11T02:28:51.349214",
+    "dd": "3",
+    "id": "e649557f-7865-4458-a354-4e81a4e5d090",
+    "updated_at": "2023-02-11T02:28:51.349225"
   }
 }
